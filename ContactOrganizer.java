@@ -7,31 +7,71 @@ class Contact{
 		private String contactPhoneNumber;
 		private String companyName;
 		private double salaryAmount;
-		private String dob;
-
+		private String dOb;
+	
+		public Contact(){}
+		
+		public static void setContactId(String contactId){
+			
+		}
+		public static void setContactName(String contactName){
+			
+		}
+		public static void setContactPhoneNumber(String contactPhoneNumber){
+			
+		}
+		public static void setCompanyName(String companyName){
+			
+		}
+		public static void setSalaryAmount(double salaryAmount){
+			
+		}
+		public static void dOb(String dOb){
+			
+		}
+		public  String getContactId(){
+			return contactId;
+		}
+		public  String getContactName(){
+			return contactName;
+		}
+		public String getContactPhoneNumber(){
+			return contactPhoneNumber;
+		}
+		public String getCompanyName(){
+			return companyName;
+		}
+		public  double getSalaryAmount(){
+			return salaryAmount;
+		}
+		public String getDoB(){
+			return dOb;
+		}
 
 }
 
-// Contact Class=============================================
+// Contact Class end =============================================
 
 class ContactOrganizer{
 	static int id = 1;
-
+	public static Contact[] contactArray = new Contact[0];
+	
+	//Increment method ======
 	public static void incrementArrays(){
 		Contact[] tempContactsArray = new Contact[contactArray.length+1];
-		/*for (int i = 0; i <tempContactsArray; i++)
+		for (int i = 0; i <tempContactsArray.length; i++)
 		{
 			tempContactsArray[i] = contactArray[i];
 		}
-		*/
+		
+		contactArray = tempContactsArray;
 	}
+	
+	
+	//main method===================
 	public static void main(String[] args){
 		Scanner input = new Scanner(System.in);
-		 
-		 
-
-
-
+		
 		System.out.println("	                      /$$ / $$$$$$$$/$$$$$$$  /$$$$$$ /$$$$$$$$ /$$   /$$ /$$$$$$$    ");
 		System.out.println("	                      |__/  $$_____/| $$__  $$|_  $$_/| $$_____/| $$$ | $$| $$__  $$  ");
 		System.out.println("	                       /$$  $$      | $$  \\ $$  | $$  | $$      | $$$$| $$| $$  \\ $$  ");
@@ -66,7 +106,7 @@ class ContactOrganizer{
 		System.out.print("Enter an option to continue ->");
 		int option = input.nextInt();
 		
-		public static Contact[] contactArray = new Contact[0];
+		
 		
 		switch (option)
 		{
