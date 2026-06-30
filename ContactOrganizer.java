@@ -63,8 +63,20 @@ class Contacts{
 class ContactOrganizer{
 	static Contacts[] contactArray = new Contacts[0];
 	static int id = 1;
-	
-	
+	//CLEAR CONSOL
+	public final static void clearConsole(){
+		try {   
+			final String os = System.getProperty("os.name");
+			if (os.contains("Windows")) {
+				new ProcessBuilder("cmd", "/c","cls").inheritIO().start().waitFor();
+			}else {
+				System.out.print("\033[H\033[2J");
+				System.out.flush();
+			}
+		}catch (final Exception e) {
+			e.printStackTrace();
+		}
+	}
 	//check birthday
 	public static boolean isValidBirthday(String dOb){
 			LocalDate localdate = LocalDate.parse(dOb);
@@ -246,7 +258,6 @@ class ContactOrganizer{
 				main(null);
 			}
 	}
-	
 	//UPDATE PHONE NUMBER
 	public static void updatephoneNo(int index){
 		Scanner input = new Scanner(System.in);
@@ -279,7 +290,6 @@ class ContactOrganizer{
 			}
 		}
 	}
-	
 	//UPDATE NAME
 	public static void updateName(int index){
 		Scanner input = new Scanner(System.in);
@@ -359,7 +369,7 @@ class ContactOrganizer{
 	//REDUCE ARRAY
 	public static void reduceArrays(int index){
 		Contacts[] temporaryArray = new Contacts[contactArray.length -1];
-		for (int i = index; i < contactArray.length; i++)
+		for (int i = index; i < contactArray.length-1; i++)
 		{
 			contactArray[i] = contactArray[i+1];
 		}
@@ -413,6 +423,119 @@ class ContactOrganizer{
 				
 		}
 	}
+	//SORT BY NAME
+	public static void sortingByName(){
+	Scanner input=new Scanner(System.in);
+		
+		for(int j=contactArray.length-1 ;j > 0;j--){
+			for (int i = 0; i < j; i++){
+				if(contactArray[i].getContactName().charAt(0) > contactArray[(i+1)].getContactName().charAt(0)){
+					Contacts temp = contactArray[i];
+					contactArray[i] = contactArray[i+1];
+					contactArray[i+1] = temp;	
+				}
+			}
+		}
+		
+		System.out.println("+--------------------------------------------------------------------------------------------+");
+		System.out.printf("| %-13s | %-12s | %-15s | %-11s | %-8s  | %-15s |%n","Contact ID","Name","Phone Number","Company","Salary","Birthday");
+		System.out.println("+--------------------------------------------------------------------------------------------+");
+		
+		for(int i=0; i < contactArray.length;i++){
+			System.out.printf("| %-13s | %-12s | %-15s | %-11s | %-8.2f | %-15s |\n",contactArray[i].getContactId(), contactArray[i].getContactName(), contactArray[i].getContactPhoneNumber(), contactArray[i].getCompanyName(), contactArray[i].getSalaryAmount(), contactArray[i].getDoB() );
+		}
+		
+		System.out.println("+--------------------------------------------------------------------------------------------+");
+		
+		System.out.println('\n');
+		System.out.print("Do you want to go Home Page (Y/N): ");
+		char main=input.next().charAt(0);
+		main=Character.toLowerCase(main);
+		
+		if(main=='y'){
+			clearConsole();
+			main(null);
+		}else{
+			clearConsole();
+			sortingByName();
+		}
+	}
+	//SORT BY SALARY
+	public static void sortingBySalary(){
+		Scanner input = new Scanner(System.in);
+		for (int j = contactArray.length - 1; j > 0; j--) {
+			for (int i = 0; i < j; i++) {
+				if (contactArray[i].getSalaryAmount() < contactArray[i + 1].getSalaryAmount()) {
+					Contacts temp = contactArray[i];
+					contactArray[i] = contactArray[i + 1];
+					contactArray[i + 1] = temp;
+				}
+			}
+		}
+		System.out.println("+--------------------------------------------------------------------------------------------+");
+		System.out.printf("| %-13s | %-12s | %-15s | %-11s | %-8s | %-15s |%n", "Contact ID", "Name", "Phone Number", "Company", "Salary", "Birthday");
+		System.out.println("+--------------------------------------------------------------------------------------------+");
+		for (int i = 0; i < contactArray.length; i++) {
+			System.out.printf("| %-13s | %-12s | %-15s | %-11s | %-8.2f | %-15s |\n", 
+				contactArray[i].getContactId(), 
+				contactArray[i].getContactName(), 
+				contactArray[i].getContactPhoneNumber(), 
+				contactArray[i].getCompanyName(), 
+				contactArray[i].getSalaryAmount(), 
+				contactArray[i].getDoB() 
+			);
+		}
+		System.out.println("+--------------------------------------------------------------------------------------------+");
+		System.out.println('\n');
+		System.out.print("Do you want to go Home Page (Y/N): ");
+		char main = input.next().charAt(0);
+		main = Character.toLowerCase(main);
+		if (main == 'y') {
+			clearConsole();
+			main(null);
+		} else {
+			clearConsole();
+		}
+
+	}
+	//SORT BY BIRTHDAY
+	public static void sortingByBirthday(){
+		Scanner input = new Scanner(System.in);
+		for (int j = contactArray.length - 1; j > 0; j--) {
+			for (int i = 0; i < j; i++) {
+				if (contactArray[i].getDoB().compareTo(contactArray[i + 1].getDoB()) > 0) {
+					Contacts temp = contactArray[i];
+					contactArray[i] = contactArray[i + 1];
+					contactArray[i + 1] = temp;
+				}
+			}
+		}
+		System.out.println("+--------------------------------------------------------------------------------------------+");
+		System.out.printf("| %-13s | %-12s | %-15s | %-11s | %-8s | %-15s |%n", "Contact ID", "Name", "Phone Number", "Company", "Salary", "Birthday");
+		System.out.println("+--------------------------------------------------------------------------------------------+");
+		for (int i = 0; i < contactArray.length; i++) {
+			System.out.printf("| %-13s | %-12s | %-15s | %-11s | %-8.2f | %-15s |\n", 
+				contactArray[i].getContactId(), 
+				contactArray[i].getContactName(), 
+				contactArray[i].getContactPhoneNumber(), 
+				contactArray[i].getCompanyName(), 
+				contactArray[i].getSalaryAmount(), 
+				contactArray[i].getDoB() 
+			);
+		}
+		System.out.println("+--------------------------------------------------------------------------------------------+");
+		System.out.println('\n');
+		System.out.print("Do you want to go Home Page (Y/N): ");
+		char main = input.next().charAt(0);
+		main = Character.toLowerCase(main);
+		if (main == 'y') {
+			clearConsole();
+			main(null);
+		} else {
+			clearConsole(); 
+		}
+
+	}
 	//SEARCH CONTACT
 	public static void searchContacts(){
 		Scanner input = new Scanner(System.in);
@@ -462,7 +585,35 @@ class ContactOrganizer{
 					}
 		}
 	}
-	
+	//SORT CONTACT
+	public static void listContacts(){
+		Scanner input = new Scanner(System.in);
+		System.out.println("+----------------------------------------------+");
+		System.out.println("|\tSORT Contact\t\t\t       |");
+		System.out.println("+----------------------------------------------+");
+		System.out.println();
+		System.out.println("[01] Sorting by Name");
+		System.out.println("[02] Sorting by Salary");
+		System.out.println("[03] Sorting by Birthday");
+		System.out.println();
+		System.out.print("Enter an option to continue ->");
+		int option = input.nextInt();
+		switch (option)
+		{
+			case 1:
+				sortingByName();
+				break;
+			case 2:
+				sortingBySalary();
+				break;
+			case 3:
+				sortingByBirthday();
+				break;
+			default:
+				System.out.println("Invalid input..");
+		}
+	}
+	//MAIN METHOD
 	public static void main(String[] args){
 		Scanner input = new Scanner(System.in);
 		
@@ -505,23 +656,30 @@ class ContactOrganizer{
 		switch (option)
 		{
 			case 01:
+				clearConsole();
 				addContacts();
 				break;
 			case 02:
+				clearConsole();
 				updateContacts();
 				break;
 			case 03:
+				clearConsole();
 				deleteContacts();
 				break;
 			case 04:
+				clearConsole();
 				searchContacts();
 				break;
 			case 05:
-				//listContacts();
+				clearConsole();
+				listContacts();
 				break;
 			case 06:
+				clearConsole();
 				return;
 			default:
+				clearConsole();
 				System.out.println("Invalid input.. try again...");
 		}
 		
