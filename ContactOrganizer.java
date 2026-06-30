@@ -55,20 +55,18 @@ class Contacts{
 		}
 		public String getDoB(){
 			return dOb;
-		}
-
-	
+		}	
 }
 
 
-
+//class ContactOrganizer
 class ContactOrganizer{
 	static Contacts[] contactArray = new Contacts[0];
 	static int id = 1;
 	
 	
 	//check birthday
-		public static boolean isValidBirthday(String dOb){
+	public static boolean isValidBirthday(String dOb){
 			LocalDate localdate = LocalDate.parse(dOb);
 			int birthyear = localdate.getYear();
 			int birthmonth = localdate.getMonthValue();
@@ -107,7 +105,6 @@ class ContactOrganizer{
 	}
 	
 	//extend array
-	
 	public static void extendArrays(String contactId, String name, String phoneNumber,String companyName,double salary,String dOb){
 		Contacts[] tempContactArray = new Contacts[contactArray.length +1];
 		for (int i = 0; i < contactArray.length; i++)
@@ -187,6 +184,54 @@ class ContactOrganizer{
 				main(null);
 			}
 	}
+	
+	//CHECK PHONE NUMBER AND NAME 
+	public static int searchNameorPhoneNo(String inputValue){
+		for (int i = 0; i < contactArray.length; i++)
+		{
+			if (inputValue.equals(contactArray[i].getContactName()) || inputValue.equals(contactArray[i].getContactPhoneNumber()))
+			{
+				return i;
+			}
+			
+		}
+		return -1;
+		
+	}
+	//UPDATE CONTACAT LIST
+	public static void updateContacts(){
+		Scanner input = new Scanner(System.in);
+		System.out.println("+-------------------------------------------------+");
+		System.out.println("|\t\tUPDATE Contact\t\t\t  |");
+		System.out.println("+-------------------------------------------------+");
+		System.out.println();
+		System.out.println();
+		System.out.print("Search Contact by Name or Phone Number - ");
+		String inputValue = input.next();
+		int index = searchNameorPhoneNo(inputValue);
+		if (index == -1)
+		{
+			System.out.println("\t\tNo contact found for "+inputValue);
+		}else
+		{
+				System.out.println("\tContact ID       : "+contactArray[index].getContactId());
+				System.out.println("\tName             : "+contactArray[index].getContactName());
+				System.out.println("\tPhone Number     : "+contactArray[index].getContactPhoneNumber());
+				System.out.println("\tCompany Name     : "+contactArray[index].getCompanyName());
+				System.out.println("\tSalary           : "+contactArray[index].getSalaryAmount());
+				System.out.println("\tB'Day(YYY-MM-DD) : "+contactArray[index].getDoB());
+				System.out.println();
+				System.out.println("What do you want to update...");
+				System.out.println();
+				System.out.println("\t[01] Name");
+				System.out.println("\t[02] Phone Number");
+				System.out.println("\t[03] Company Name");
+				System.out.println("\t[04] Salary");
+				System.out.println();
+				System.out.print("Enter an option to continue -> ");
+				int option = input.nextInt();
+		}
+	}
 	public static void main(String[] args){
 		Scanner input = new Scanner(System.in);
 		
@@ -232,7 +277,7 @@ class ContactOrganizer{
 				addContacts();
 				break;
 			case 02:
-				//updateContacts();
+				updateContacts();
 				break;
 			case 03:
 				//deleteContacts();
