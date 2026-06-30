@@ -11,6 +11,15 @@ class Contacts{
 	
 	Contacts(){}
 	
+	
+		Contacts(String contactId,String name,String phoneNumber,String companyName,double salary,String dOb){
+			setContactId(contactId);
+			setContactName(name);
+			setContactPhoneNumber(phoneNumber);
+			setCompanyName(companyName);
+			setSalaryAmount(salary);
+			setDOb(dOb);
+		}
 		public void setContactId(String contactId){
 			this.contactId = contactId;
 		}
@@ -26,7 +35,7 @@ class Contacts{
 		public  void setSalaryAmount(double salary){
 			this.salary = salary;
 		}
-		public  void dOb(String dOb){
+		public  void setDOb(String dOb){
 			this.dOb = dOb;
 		}
 		public  String getContactId(){
@@ -57,6 +66,24 @@ class ContactOrganizer{
 	static Contacts[] contactArray = new Contacts[0];
 	static int id = 1;
 	
+	
+	//check birthday
+		public static boolean isValidBirthday(String dOb){
+			LocalDate localdate = LocalDate.parse(dOb);
+			int birthyear = localdate.getYear();
+			int birthmonth = localdate.getMonthValue();
+			int birthdate = localdate.getDayOfMonth();
+			
+			LocalDate currentDate = LocalDate.now();
+			int currentYear = currentDate.getYear();
+			
+			
+			if(birthyear > 1926 && birthyear < currentYear && 12> birthmonth && birthmonth > 0 && birthdate >0 &&  birthdate <30){
+				return true;
+			}else{
+				return false;
+			}
+		}
 	
 	//check salary
 	public static boolean isValidsalary(double salary){
@@ -89,6 +116,7 @@ class ContactOrganizer{
 		}
 		
 		contactArray = tempContactArray;
+		contactArray[contactArray.length -1] = new Contacts(contactId,name,phoneNumber,companyName,salary,dOb);
 	}
 	//generate ID
 	public static String generateId(int id){
@@ -108,10 +136,11 @@ class ContactOrganizer{
 		System.out.println();		
 		System.out.print("Name\t\t : ");
 		String name = input. next();
+		String number = " ";
 		L1:while (true)
 		{
 			System.out.print("Phone Number\t : ");
-			String number = input. next();
+			number = input. next();
 			if (!isValidPhonenumber(number))
 			{
 				System.out.println("Invalid number.. try again..");
@@ -121,11 +150,11 @@ class ContactOrganizer{
 		}
 		System.out.print("Company Name\t : ");
 		String companyName = input. next();
-		
+		double salary = 0;
 		L2:while (true)
 		{
 			System.out.print("Salary\t\t : ");
-			double salary = input. nextDouble();
+			salary = input. nextDouble();
 			if (!isValidsalary(salary))
 			{
 				System.out.println("Salary should positive .. try again..");
@@ -133,12 +162,30 @@ class ContactOrganizer{
 			}
 			break;
 		}
-		System.out.print("B'Day(YYYY-MM-DD) : ");
-		String dOb = input. next();
-		
-		
-		
-
+		String dOb = "";
+		L3:while (true)
+		{
+			System.out.print("B'Day(YYYY-MM-DD) : ");
+			 dOb = input. next();
+			if (!isValidBirthday(dOb))
+			{
+				System.out.println("Invalid Birthday....");
+				continue L3;
+			}
+			break;
+		}
+		extendArrays(generateId(id),name,number,companyName,salary,dOb);
+		System.out.print("\n\tContact has been added successfully...\n\n");
+			System.out.print("Do you want to add another contact(Y/N): ");
+			char yORn = input.next().charAt(0);
+			if (yORn == 'Y' ||yORn == 'y' )
+			{	
+				id++;
+				addContacts();
+			}if (yORn == 'N' ||yORn == 'n')
+			{
+				main(null);
+			}
 	}
 	public static void main(String[] args){
 		Scanner input = new Scanner(System.in);
