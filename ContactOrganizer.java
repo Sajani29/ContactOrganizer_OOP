@@ -304,6 +304,7 @@ class ContactOrganizer{
 	}
 	//UPDATE CONTACAT LIST
 	public static void updateContacts(){
+		
 		Scanner input = new Scanner(System.in);
 		System.out.println("+-------------------------------------------------+");
 		System.out.println("|\t\tUPDATE Contact\t\t\t  |");
@@ -354,6 +355,114 @@ class ContactOrganizer{
 				}
 		}
 	}
+	
+	//REDUCE ARRAY
+	public static void reduceArrays(int index){
+		Contacts[] temporaryArray = new Contacts[contactArray.length -1];
+		for (int i = index; i < contactArray.length; i++)
+		{
+			contactArray[i] = contactArray[i+1];
+		}
+		
+		contactArray = temporaryArray;
+		
+	}
+	//DELETE CONTACT
+	public static void deleteContacts(){
+		Scanner input = new Scanner(System.in);
+		System.out.println("+-------------------------------------------------+");
+		System.out.println("|\t\tDELETE Contact\t\t\t  |");
+		System.out.println("+-------------------------------------------------+");
+		System.out.println();
+		System.out.println();
+		System.out.print("Search Contact by Name or Phone Number - ");
+		String inputNameorPhone = input.next();
+		int index = searchNameorPhoneNo(inputNameorPhone);
+		if (index == -1)
+		{
+			System.out.println("\t\tNo contact found for "+inputNameorPhone);
+		}else
+		{
+				System.out.println("\tContact ID       : "+contactArray[index].getContactId());
+				System.out.println("\tName             : "+contactArray[index].getContactName());
+				System.out.println("\tPhone Number     : "+contactArray[index].getContactPhoneNumber());
+				System.out.println("\tCompany Name     : "+contactArray[index].getCompanyName());
+				System.out.println("\tSalary           : "+contactArray[index].getSalaryAmount());
+				System.out.println("\tB'Day(YYY-MM-DD) : "+contactArray[index].getDoB());
+				System.out.println();
+				System.out.println("Do you want to delete this contact (Y/N): ");
+				System.out.println();
+				char yORn = input.next().charAt(0);
+					if (yORn == 'Y' ||yORn == 'y' )
+					{
+						reduceArrays(index);
+						System.out.println("\t\tCustomer has been deleted successfully...");
+					}if (yORn == 'N' ||yORn == 'n')
+					{
+						main(null);
+					}
+				System.out.print("Do you want to delete another Contact(Y/N): ");
+				char yORN = input.next().charAt(0);
+				if (yORN == 'Y' ||yORN == 'y' )
+				{
+					deleteContacts();
+				}if (yORN == 'N' ||yORN == 'n')
+				{
+					main(null);
+				}
+				
+		}
+	}
+	//SEARCH CONTACT
+	public static void searchContacts(){
+		Scanner input = new Scanner(System.in);
+		System.out.println("+-------------------------------------------------+");
+		System.out.println("|\t\tSEARCH Contact\t\t\t  |");
+		System.out.println("+-------------------------------------------------+");
+		System.out.println();
+		System.out.println();
+		System.out.print("Search Contact by Name or Phone Number - ");
+		String inputNameorPhone = input.next();
+		int index = searchNameorPhoneNo(inputNameorPhone);
+		if (index == -1)
+		{
+			System.out.println("\t\tNo contact found for "+inputNameorPhone+"...");
+			System.out.println("Do you want to try a new search (Y/N): ");
+			System.out.println();
+				char yORn = input.next().charAt(0);
+					if (yORn == 'Y' ||yORn == 'y' )
+					{
+						searchContacts();
+						System.out.println("\t\tCustomer has been deleted successfully...");
+					}if (yORn == 'N' ||yORn == 'n')
+					{
+						main(null);
+					}
+		}
+		else
+		{
+			System.out.println("\tContact ID       : "+contactArray[index].getContactId());
+			System.out.println("\tName             : "+contactArray[index].getContactName());
+			System.out.println("\tPhone Number     : "+contactArray[index].getContactPhoneNumber());
+			System.out.println("\tCompany Name     : "+contactArray[index].getCompanyName());
+			System.out.println("\tSalary           : "+contactArray[index].getSalaryAmount());
+			System.out.println("\tB'Day(YYY-MM-DD) : "+contactArray[index].getDoB());
+			System.out.println();
+			
+			System.out.println("Do you want to try a new search (Y/N): ");
+			System.out.println();
+				char yORn = input.next().charAt(0);
+					if (yORn == 'Y' ||yORn == 'y' )
+					{
+						searchContacts();
+						System.out.println("\t\tCustomer has been deleted successfully...");
+					}if (yORn == 'N' ||yORn == 'n')
+					{
+						main(null);
+					}
+		}
+	}
+	
 	public static void main(String[] args){
 		Scanner input = new Scanner(System.in);
 		
@@ -402,10 +511,10 @@ class ContactOrganizer{
 				updateContacts();
 				break;
 			case 03:
-				//deleteContacts();
+				deleteContacts();
 				break;
 			case 04:
-				//searchContacts();
+				searchContacts();
 				break;
 			case 05:
 				//listContacts();
